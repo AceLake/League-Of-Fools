@@ -18,5 +18,19 @@ namespace League_Of_Fools.Controllers
             var champions = await _championService.GetAll();
             return View(champions);
         }
+
+        public async Task<IActionResult> Details(int Key)
+        {
+            var champions = await _championService.GetAll();
+            foreach (var champion in champions)
+            {
+                if(Key == champion.Key)
+                {
+                    return View(champion);
+                }
+            }
+            return View(); 
+        }
+
     }
 }

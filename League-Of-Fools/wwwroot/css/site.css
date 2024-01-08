@@ -15,4 +15,15 @@ html {
 
 body {
   margin-bottom: 60px;
+  /*background-color:rgb(18, 18, 39);*/
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card{
+    padding: 5px;
+    margin: 10px;
 }
