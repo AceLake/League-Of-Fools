@@ -5,5 +5,6 @@ namespace League_Of_Fools.Service
     public interface IChampionService
     {
         public Task<List<ChampionModel>> GetAll();
+        public Task<ChampionModel> GetChampionById(string Id);
     }
 }

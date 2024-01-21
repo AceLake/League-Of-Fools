@@ -1,6 +1,6 @@
 ﻿namespace League_Of_Fools.Models
 {
-    public class RootObject
+    public class ChampListRootObject
     {
         public string Type { get; set; }
         public string Format { get; set; }

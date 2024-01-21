@@ -26,7 +26,8 @@ namespace League_Of_Fools.Controllers
             {
                 if(Key == champion.Key)
                 {
-                    return View(champion);
+                    var champ = await _championService.GetChampionById(champion.Id);
+                    return View(champ);
                 }
             }
             return View(); 

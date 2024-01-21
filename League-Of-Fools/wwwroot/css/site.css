@@ -14,8 +14,8 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
-  /*background-color:rgb(18, 18, 39);*/
+    margin-bottom: 60px;
+    /*background-color: #032C30;*/
 }
 
 .container {
@@ -26,4 +26,18 @@ body {
 .card{
     padding: 5px;
     margin: 10px;
+}
+
+.carousel-caption {
+    background-color: rgba(0,0,0,0.4);
+}
+
+.champ-title {
+    margin-left: 20px;
+    font-size: 25px;
+    color: rgb(83, 83, 83);
+}
+
+.navbar {
+    background-color: #0D2026;
 }

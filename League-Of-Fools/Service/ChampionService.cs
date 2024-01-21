@@ -19,7 +19,7 @@ namespace League_Of_Fools.Service
                 var responseBody = await response.Content.ReadAsStringAsync();
 
                 // Deserialize the entire JSON object
-                var rootObject = JsonConvert.DeserializeObject<RootObject>(responseBody);
+                var rootObject = JsonConvert.DeserializeObject<ChampListRootObject>(responseBody);
 
                 // Extract the list of champions
                 foreach (var champion in rootObject.Data.Values)
@@ -29,6 +29,31 @@ namespace League_Of_Fools.Service
             }
             Console.WriteLine(champs);
             return champs;
+        }
+
+        public async Task<ChampionModel> GetChampionById(string Id)
+        {
+            ChampionModel champ = new ChampionModel();
+
+            using (HttpClient client = new HttpClient())
+            {
+                string URL = ($"https://ddragon.leagueoflegends.com/cdn/13.24.1/data/en_US/champion/{Id}.json");
+                Console.WriteLine(URL);
+                HttpResponseMessage response = await client.GetAsync(URL);
+                response.EnsureSuccessStatusCode();
+                var responseBody = await response.Content.ReadAsStringAsync();
+
+                // Deserialize the entire JSON object
+                var rootObject = JsonConvert.DeserializeObject<ChampRootObject>(responseBody);
+
+                // Extract the list of champions
+                foreach (var champion in rootObject.Data.Values)
+                {
+                    champ = champion;
+                }
+            }
+            Console.WriteLine(champ);
+            return champ;
         }
     }
 }
