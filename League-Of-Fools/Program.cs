@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IChampionService, ChampionService>();
+builder.Services.AddSingleton<ISummonerService, SummonerService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -2,7 +2,7 @@
 using League_Of_Fools.Models;
 using League_Of_Fools.Service;
 
-namespace RegisterAndLoginApp.Controllers
+namespace League_Of_Fools.Controllers
 {
     public class LoginController : Controller
     {
