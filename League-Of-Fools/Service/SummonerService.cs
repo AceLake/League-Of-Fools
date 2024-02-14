@@ -1,19 +1,28 @@
 ﻿using League_Of_Fools.Models;
+using Newtonsoft.Json;
 using System.Text.Json;
+using static System.Net.WebRequestMethods;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace League_Of_Fools.Service
 {
     public class SummonerService : ISummonerService
     {
-        private static readonly HttpClient client;
-        private static string apiKey = "RGAPI-2599a28f-3ad3-46c3-8a61-8ccbeea93dfd";
+        //private static readonly HttpClient client;
+        private static string apiKey = "RGAPI-2958a25e-3262-41f0-9d4e-2bbfdd6f9c7e";
+        private readonly IHttpClientFactory _clientFactory;
+        private readonly IChampionService _championService;
 
-        static SummonerService()
+        public SummonerService(IHttpClientFactory httpClientFactory, IChampionService championService)
         {
-            client = new HttpClient()
-            {
-                BaseAddress = new Uri("https://na1.api.riotgames.com")
-            };
+
+            _clientFactory = httpClientFactory;
+            _championService = championService;
+
+            //client = new HttpClient()
+            //{
+            //    BaseAddress = new Uri("https://americas.api.riotgames.com/")
+            //};
         }
 
         public Task<List<SummonerModel>> GetSummonerByAccountID(string AccountID)
@@ -21,10 +30,44 @@ namespace League_Of_Fools.Service
             throw new NotImplementedException();
         }
 
-        public async Task<SummonerModel> GetSummonerByName(string SummonerName)
+        public async Task<SummonerModel> GetSummonerByNameAndTagLine(string SummonerName, string SummonerTagLine)
         {
+            var client = _clientFactory.CreateClient("GetSummonerByNameAndTagLine");
+            client.BaseAddress = new Uri("https://americas.api.riotgames.com/");
             // The first line is building the Url of the API and using the SummonerName and apiKey parameters
-            var url = string.Format("/lol/summoner/v4/summoners/by-name/{0}?api_key={1}", SummonerName, apiKey);
+            // get the puuid from this request
+            var url = string.Format("/riot/account/v1/accounts/by-riot-id/{0}/{1}?api_key={2}", SummonerName, SummonerTagLine, apiKey);
+            var result = new SummonerModel();
+
+            // Next, we are making an API call using the GetAsync method that sends a GET request to the specified Uri as an asynchronous operation.
+            // The method returns System.Net.Http.HttpResponseMessage object that represents an HTTP response message including the status code and data.
+            var response = await client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                // Next, we are calling ReadAsStringAsync method that serializes the HTTP content to a string
+                var stringResponse = await response.Content.ReadAsStringAsync();
+
+                // Finally, we are using JsonSerializer to Deserialize the JSON response string into a  objects.
+                result = JsonSerializer.Deserialize<SummonerModel>(stringResponse,
+                    new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                string puuid = result.Puuid;
+                result = await GetSummonerByPUUID(puuid);
+            }
+            else
+            {
+                result = null;
+            }
+
+            return result;
+        }
+
+        public async Task<SummonerModel> GetSummonerByPUUID(string puuid)
+        {
+            var client = _clientFactory.CreateClient("GetSummonerByPUUID");
+
+            // The first line is building the Url of the API and using the SummonerName and apiKey parameters
+            client.BaseAddress = new Uri("https://na1.api.riotgames.com");
+            var url = string.Format("/lol/summoner/v4/summoners/by-puuid/{0}/?api_key={1}", puuid, apiKey);
             var result = new SummonerModel();
 
             // Next, we are making an API call using the GetAsync method that sends a GET request to the specified Uri as an asynchronous operation.
@@ -38,6 +81,7 @@ namespace League_Of_Fools.Service
                 // Finally, we are using JsonSerializer to Deserialize the JSON response string into a List of HolidayModel objects.
                 result = JsonSerializer.Deserialize<SummonerModel>(stringResponse,
                     new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                result.Champions = GetChampsByMastery(GetChampionMasteryEntries(puuid));
             }
             else
             {
@@ -45,11 +89,6 @@ namespace League_Of_Fools.Service
             }
 
             return result;
-        }
-
-        public Task<List<SummonerModel>> GetSummonerByPUUID(string SummonerID)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<List<SummonerModel>> GetSummonerByRsoPUUID(string SummonerID)
@@ -65,6 +104,35 @@ namespace League_Of_Fools.Service
         public Task<List<SummonerModel>> GetSummonerByToken(string Bearertoken)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<ChampionMasteryEntry>> GetChampionMasteryEntries(string puuid)
+        {
+            List<ChampionMasteryEntry> result = new List<ChampionMasteryEntry>();
+
+            using (HttpClient client = new HttpClient())
+            {
+                var url = string.Format("https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{0}/?api_key={1}", puuid, apiKey);
+                HttpResponseMessage response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                var responseBody = await response.Content.ReadAsStringAsync();
+
+                // Deserialize the entire JSON array as a list of ChampionMasteryEntry
+                var CMEs = JsonConvert.DeserializeObject<List<ChampionMasteryEntry>>(responseBody);
+
+                // Add the list of champions to the result
+                result.AddRange(CMEs);
+            }
+
+            return result;
+        }
+
+        public Task<List<ChampionModel>> GetChampsByMastery(Task<List<ChampionMasteryEntry>> CMEs)
+        {
+            Task<List<ChampionModel>> result = _championService.GetAll();
+
+
+            return result;
         }
     }
 }

@@ -13,9 +13,12 @@
         <form asp-action="ProssesSearch">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="GameName" class="control-label"></label>
+                <input asp-for="GameName" class="form-control" />
+                <span asp-validation-for="GameName" class="text-danger"></span>
+                <label asp-for="TagLine" class="control-label"></label>
+                <input asp-for="TagLine" class="form-control" />
+                <span asp-validation-for="TagLine" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Search" class="btn btn-primary" />

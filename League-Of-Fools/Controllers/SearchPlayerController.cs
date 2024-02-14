@@ -18,9 +18,9 @@ namespace League_Of_Fools.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> ProssesSearch(SummonerModel summonerName)
+        public async Task<IActionResult> ProssesSearch(SummonerModel temp_summoner)
         {
-            SummonerModel summoner = await _summonerService.GetSummonerByName(summonerName.Name);
+            SummonerModel summoner = await _summonerService.GetSummonerByNameAndTagLine(temp_summoner.GameName, temp_summoner.TagLine);
             return View(summoner);
         }
     }

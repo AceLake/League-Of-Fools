@@ -6,6 +6,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IChampionService, ChampionService>();
 builder.Services.AddSingleton<ISummonerService, SummonerService>();
+builder.Services.AddHttpClient("GetSummonerByNameAndTagLine", client =>
+{
+    // Configure your HttpClient here if needed
+});
+
+builder.Services.AddHttpClient("GetSummonerByPUUID", client =>
+{
+    // Configure your HttpClient here if needed
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
