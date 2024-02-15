@@ -81,7 +81,10 @@ namespace League_Of_Fools.Service
                 // Finally, we are using JsonSerializer to Deserialize the JSON response string into a List of HolidayModel objects.
                 result = JsonSerializer.Deserialize<SummonerModel>(stringResponse,
                     new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-                result.Champions = GetChampsByMastery(GetChampionMasteryEntries(puuid));
+
+                Task<List<ChampionMasteryEntry>> CMEs = GetChampionMasteryEntries(puuid);
+
+                result.Champions = GetChampsByMastery(CMEs);
             }
             else
             {
@@ -127,12 +130,20 @@ namespace League_Of_Fools.Service
             return result;
         }
 
-        public Task<List<ChampionModel>> GetChampsByMastery(Task<List<ChampionMasteryEntry>> CMEs)
+        public async Task<List<ChampionModel>> GetChampsByMastery(Task<List<ChampionMasteryEntry>> CMEs)
         {
-            Task<List<ChampionModel>> result = _championService.GetAll();
+            // Wait for the task to complete and get the sorted list of ChampionMasteryEntry
+            var masteryEntries = await CMEs;
 
+            // Assuming _championService.GetAll() returns a list of all champions
+            List<ChampionModel> allChampions = await _championService.GetAll();
 
-            return result;
+            // Sort the list of champions based on the mastery entries
+            var sortedChampions = allChampions
+                .OrderByDescending(champion => masteryEntries.FirstOrDefault(entry => entry.ChampionId == champion.Key)?.ChampionLevel ?? 0)
+                .ToList();
+
+            return sortedChampions;
         }
     }
 }

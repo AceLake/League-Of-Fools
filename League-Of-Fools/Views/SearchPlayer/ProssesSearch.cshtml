@@ -10,6 +10,11 @@
     </div>
     <div class="top-champs">
         <h2>Top Played Champs</h2>
-
+        @foreach (var champ in await Model.Champions)
+        {
+            <div class='card' style='width: 18rem;'>
+                <h3>Here</h3>
+            </div>
+        }
     </div>
 </div>
