@@ -11,44 +11,41 @@ namespace League_Of_Fools.Controllers
             return View();
         }
 
-        public IActionResult ProcessLogin(UserModel user)
+        public IActionResult ProcessLogin(string username, string password)
         {
-            SecurityService securityService = new SecurityService();
+            IAccountService accounts = new FakeAccountService();
 
-            if (securityService.IsValid(user))
-            {//add a popup that says logged in
-                return RedirectToAction("Index","Home");
+            AccountModel user = accounts.LoginAccount(username, password);
+
+            if (user == null)
+            {
+                ViewBag.Error = "Please try again";
+                return View("Index");
+                
             }
             else
             {
-                return View("LoginFailure", user);
+                return View("AccountHome", user);
             }
         }
-
-        public IActionResult ProcessRegister(UserModel user)
+        public IActionResult AccountHome()
         {
-            return View();
+            return View(User);
+        }
+        public IActionResult ProcessRegister()
+        {
+            return View("Register");
         }
 
-        public IActionResult RegisterResults(UserModel user)
+        public IActionResult RegisterResults(string username, string password)
         {
+            IAccountService accounts = new FakeAccountService();
 
-            SecurityService securityService = new SecurityService();
-            SecurityDAO securityDAO = new SecurityDAO();
+            accounts.AddAccount(new AccountModel(username, password));
 
-            // Here I check if the user is already in the database 
-            // if they are it doesnt register the user
-            // if they are not then it creates the user
-            if (securityService.IsValid(user))
-            {
-                return View("LoginFailure", user);
-            }
-            else
-            {
-                securityDAO.Create(user);
-                return View("RegisterSuccess", user);
-            }
-            
+            Console.WriteLine(accounts.LoginAccount(username, password).ToString());
+
+            return View("Index");
         }
     }
 }
