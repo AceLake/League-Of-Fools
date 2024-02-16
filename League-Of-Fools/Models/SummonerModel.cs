@@ -13,5 +13,6 @@
         public int SummonerLevel { get; set; }
         public int MyProperty { get; set; }
         public Task<List<ChampionModel>> Champions { get; set; }
+        public Task<List<ChampionMasteryEntry>> CMEs { get; set; }
     }
 }

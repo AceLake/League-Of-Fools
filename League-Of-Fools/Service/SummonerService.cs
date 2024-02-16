@@ -83,7 +83,7 @@ namespace League_Of_Fools.Service
                     new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
                 Task<List<ChampionMasteryEntry>> CMEs = GetChampionMasteryEntries(puuid);
-
+                result.CMEs = CMEs;
                 result.Champions = GetChampsByMastery(CMEs);
             }
             else
@@ -140,7 +140,7 @@ namespace League_Of_Fools.Service
 
             // Sort the list of champions based on the mastery entries
             var sortedChampions = allChampions
-                .OrderByDescending(champion => masteryEntries.FirstOrDefault(entry => entry.ChampionId == champion.Key)?.ChampionLevel ?? 0)
+                .OrderByDescending(champion => masteryEntries.FirstOrDefault(entry => entry.ChampionId == champion.Key)?.ChampionPoints ?? 0)
                 .ToList();
 
             return sortedChampions;
