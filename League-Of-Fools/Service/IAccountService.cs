@@ -14,5 +14,11 @@ namespace League_Of_Fools.Service
         public AccountModel LoginAccount(string username, string password);
         public bool AddAccount(AccountModel newAccount);
         public void addUserToList(UserModel userToAdd, AccountModel account);
+        /// <summary>
+        /// This can retun null
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public AccountModel getUserByID(int userID);
     }
 }

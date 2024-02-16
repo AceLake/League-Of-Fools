@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using League_Of_Fools.Models;
 using League_Of_Fools.Service;
+using RegisterAndLoginApp.Controllers;
 
 namespace League_Of_Fools.Controllers
 {
@@ -25,12 +26,17 @@ namespace League_Of_Fools.Controllers
             }
             else
             {
+                HttpContext.Session.SetInt32("username", user.ID);
                 return View("AccountHome", user);
             }
         }
+        [CustomAuthorization]
         public IActionResult AccountHome()
         {
-            return View(User);
+            IAccountService accounts = new FakeAccountService();
+            //get the user by the cookie
+            AccountModel user = accounts.getUserByID((int)HttpContext.Session.GetInt32("username"));
+            return View(user);
         }
         public IActionResult ProcessRegister()
         {

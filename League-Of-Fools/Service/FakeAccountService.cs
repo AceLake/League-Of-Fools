@@ -32,6 +32,12 @@ namespace League_Of_Fools.Service
             _accounts.FirstOrDefault(a => a.ID == account.ID).FollowedUsers.Add(userToAdd.Id);
         }
 
+        public AccountModel getUserByID(int userID)
+        {
+            AccountModel user = _accounts.FirstOrDefault(a => a.ID == userID);
+            return user;
+        }
+
         public AccountModel LoginAccount(string username, string password)
         {
             return _accounts.FirstOrDefault(a => a.Username == username && a.Password == password);
