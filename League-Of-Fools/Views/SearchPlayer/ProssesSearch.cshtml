@@ -14,13 +14,12 @@
             @foreach (var champ in await Model.Champions)
             {
                 <div class='card' style='width: 18rem;'>
-                    Here
-                    @*<img src=@($"https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{champ.Id}_0.jpg") class='card-img-top' alt='@champ.Name' />
+                    <img src=@($"https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{champ.Id}_0.jpg") class='card-img-top' alt='@champ.Name' />
                     <div class='card-body'>
                         <h5 class='card-title'>@champ.Name</h5>
                         <p class='card-text'>@champ.Blurb</p>
                         <a class="btn btn-primary" asp-route-Key="@champ.Key" asp-controller="Champions" asp-action="Details">@($"More on {champ.Name}")</a>
-                    </div>*@
+                    </div>
                 </div>
             }
         </div>

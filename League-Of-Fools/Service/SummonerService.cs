@@ -9,7 +9,7 @@ namespace League_Of_Fools.Service
     public class SummonerService : ISummonerService
     {
         //private static readonly HttpClient client;
-        private static string apiKey = "RGAPI-64a3f8aa-b98d-4e6f-885b-1a3bb896ebbf";
+        private static string apiKey = "RGAPI-620ed0c1-1ff7-48c8-9ed5-9c0763db21fe";
         private readonly IHttpClientFactory _clientFactory;
         private readonly IChampionService _championService;
 
@@ -115,7 +115,7 @@ namespace League_Of_Fools.Service
 
             using (HttpClient client = new HttpClient())
             {
-                var url = string.Format("https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{0}/?api_key={1}", puuid, apiKey);
+                var url = string.Format("https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{0}/?api_key={1}", puuid, apiKey);
                 HttpResponseMessage response = await client.GetAsync(url);
                 response.EnsureSuccessStatusCode();
                 var responseBody = await response.Content.ReadAsStringAsync();
@@ -124,7 +124,7 @@ namespace League_Of_Fools.Service
                 var CMEs = JsonConvert.DeserializeObject<List<ChampionMasteryEntry>>(responseBody);
 
                 // Add the list of champions to the result
-                result.AddRange(CMEs);
+                result.AddRange((IEnumerable<ChampionMasteryEntry>)CMEs);
             }
 
             return result;
