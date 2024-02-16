@@ -65,6 +65,7 @@ namespace League_Of_Fools.Service
         {
             var client = _clientFactory.CreateClient("GetSummonerByPUUID");
 
+            // https://euw1.api.riotgames.com
             // The first line is building the Url of the API and using the SummonerName and apiKey parameters
             client.BaseAddress = new Uri("https://na1.api.riotgames.com");
             var url = string.Format("/lol/summoner/v4/summoners/by-puuid/{0}/?api_key={1}", puuid, apiKey);
