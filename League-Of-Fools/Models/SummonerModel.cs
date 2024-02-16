@@ -11,7 +11,14 @@
         public int ProfileIconId { get; set; }
         public long RevisionDate { get; set; }
         public int SummonerLevel { get; set; }
-        public int MyProperty { get; set; }
+        /// <summary>
+        /// example PLATFORM:NA1 HOST: na1.api.riotgames.com
+        /// </summary>
+        public string PlatformRoutingValue { get; set; }
+        /// <summary>
+        /// example REGION:AMERICAS HOST: americas.api.riotgames.com
+        /// </summary>
+        public string RegionalRoutingValue { get; set; }
         public Task<List<ChampionModel>> Champions { get; set; }
         public Task<List<ChampionMasteryEntry>> CMEs { get; set; }
     }

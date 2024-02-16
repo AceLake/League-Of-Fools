@@ -3,11 +3,17 @@
 <div>
     @*https://ddragon.leagueoflegends.com/cdn/14.2.1/img/profileicon/5211.png*@
     <div class="champ-head" style="display:flex">
-        <img src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/profileicon/@(Model.ProfileIconId).png" />
+        <img src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/profileicon/@(Model.ProfileIconId).png" class="player-icon" />
         <div>
-            <h1 class="champ-name">@Model.Name</h1>
+            <h1 class="champ-name" style="padding-left:15px">@Model.Name</h1>
+            <h2 class="champ-title">Summoner Level: @Model.SummonerLevel</h2>
         </div>
     </div>
+    <br />
+    <br />
+
+    <br />
+
     <div class="top-champs">
         <h2>Top Played Champs</h2>
         <div class="container">

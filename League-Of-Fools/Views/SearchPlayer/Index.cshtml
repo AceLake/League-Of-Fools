@@ -6,7 +6,7 @@
 
 <h1>Search for a Summoner</h1>
 
-<h4>Summoner needs to be in the North America region</h4>
+<h4></h4>
 <hr />
 <div class="row">
     <div class="col-md-10">
@@ -21,6 +21,38 @@
                 <span asp-validation-for="TagLine" class="text-danger"></span>
             </div>
             <div class="form-group">
+
+                <label asp-for="RegionalRoutingValue" class="control-label">Region:</label>
+                <select asp-for="RegionalRoutingValue" class="form-control">
+                    <option value="AMERICAS">AMERICAS</option>
+                    <option value="ASIA">ASIA</option>
+                    <option value="EUROPE">EUROPE</option>
+                    <option value="SEA">SEA</option>
+                </select>
+                <span asp-validation-for="RegionalRoutingValue" class="text-danger"></span>
+                <label asp-for="PlatformRoutingValue" class="control-label">Platform:</label>
+                <select asp-for="PlatformRoutingValue" class="form-control">
+                    <option value="NA1">NA1</option>
+                    <option value="BR1">BR1</option>
+                    <option value="EUN1">EUN1</option>
+                    <option value="EUW1">EUW1</option>
+                    <option value="JP1">JP1</option>
+                    <option value="KR">KR</option>
+                    <option value="LA1">LA1</option>
+                    <option value="LA2">LA2</option>
+                    <option value="OC1">OC1</option>
+                    <option value="TR1">TR1</option>
+                    <option value="RU">RU</option>
+                    <option value="PH2">PH2</option>
+                    <option value="SG2">SG2</option>
+                    <option value="TH2">TH2</option>
+                    <option value="TW2">TW2</option>
+                    <option value="VN2">VN2</option>
+                </select>
+                <span asp-validation-for="PlatformRoutingValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <p></p>
                 <input type="submit" value="Search" class="btn btn-primary" />
             </div>
         </form>

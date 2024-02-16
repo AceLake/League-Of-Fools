@@ -30,13 +30,14 @@ namespace League_Of_Fools.Service
             throw new NotImplementedException();
         }
 
-        public async Task<SummonerModel> GetSummonerByNameAndTagLine(string SummonerName, string SummonerTagLine)
+        public async Task<SummonerModel> GetSummonerByNameAndTagLine(SummonerModel summoner)
         {
             var client = _clientFactory.CreateClient("GetSummonerByNameAndTagLine");
-            client.BaseAddress = new Uri("https://americas.api.riotgames.com/");
+            string region = summoner.RegionalRoutingValue.ToLower();
+            client.BaseAddress = new Uri(string.Format("https://{0}.api.riotgames.com/", region));
             // The first line is building the Url of the API and using the SummonerName and apiKey parameters
             // get the puuid from this request
-            var url = string.Format("/riot/account/v1/accounts/by-riot-id/{0}/{1}?api_key={2}", SummonerName, SummonerTagLine, apiKey);
+            var url = string.Format("/riot/account/v1/accounts/by-riot-id/{0}/{1}?api_key={2}", summoner.GameName, summoner.TagLine, apiKey);
             var result = new SummonerModel();
 
             // Next, we are making an API call using the GetAsync method that sends a GET request to the specified Uri as an asynchronous operation.
@@ -50,8 +51,8 @@ namespace League_Of_Fools.Service
                 // Finally, we are using JsonSerializer to Deserialize the JSON response string into a  objects.
                 result = JsonSerializer.Deserialize<SummonerModel>(stringResponse,
                     new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-                string puuid = result.Puuid;
-                result = await GetSummonerByPUUID(puuid);
+                result.PlatformRoutingValue = summoner.PlatformRoutingValue;
+                result = await GetSummonerByPUUID(result);
             }
             else
             {
@@ -61,14 +62,15 @@ namespace League_Of_Fools.Service
             return result;
         }
 
-        public async Task<SummonerModel> GetSummonerByPUUID(string puuid)
+        public async Task<SummonerModel> GetSummonerByPUUID(SummonerModel summoner)
         {
             var client = _clientFactory.CreateClient("GetSummonerByPUUID");
 
             // https://euw1.api.riotgames.com
             // The first line is building the Url of the API and using the SummonerName and apiKey parameters
-            client.BaseAddress = new Uri("https://na1.api.riotgames.com");
-            var url = string.Format("/lol/summoner/v4/summoners/by-puuid/{0}/?api_key={1}", puuid, apiKey);
+            string platform = summoner.PlatformRoutingValue.ToLower();
+            client.BaseAddress = new Uri(string.Format("https://{0}.api.riotgames.com",platform));
+            var url = string.Format("/lol/summoner/v4/summoners/by-puuid/{0}/?api_key={1}", summoner.Puuid, apiKey);
             var result = new SummonerModel();
 
             // Next, we are making an API call using the GetAsync method that sends a GET request to the specified Uri as an asynchronous operation.
@@ -83,7 +85,7 @@ namespace League_Of_Fools.Service
                 result = JsonSerializer.Deserialize<SummonerModel>(stringResponse,
                     new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
-                Task<List<ChampionMasteryEntry>> CMEs = GetChampionMasteryEntries(puuid);
+                Task<List<ChampionMasteryEntry>> CMEs = GetChampionMasteryEntries(summoner);
                 result.CMEs = CMEs;
                 result.Champions = GetChampsByMastery(CMEs);
             }
@@ -110,13 +112,13 @@ namespace League_Of_Fools.Service
             throw new NotImplementedException();
         }
 
-        public async Task<List<ChampionMasteryEntry>> GetChampionMasteryEntries(string puuid)
+        public async Task<List<ChampionMasteryEntry>> GetChampionMasteryEntries(SummonerModel summoner)
         {
             List<ChampionMasteryEntry> result = new List<ChampionMasteryEntry>();
 
             using (HttpClient client = new HttpClient())
             {
-                var url = string.Format("https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{0}/?api_key={1}", puuid, apiKey);
+                var url = string.Format("https://{0}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{1}/?api_key={2}",summoner.PlatformRoutingValue.ToLower(), summoner.Puuid, apiKey);
                 HttpResponseMessage response = await client.GetAsync(url);
                 response.EnsureSuccessStatusCode();
                 var responseBody = await response.Content.ReadAsStringAsync();
