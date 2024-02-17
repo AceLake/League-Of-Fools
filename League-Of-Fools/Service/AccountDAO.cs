@@ -12,7 +12,7 @@ namespace League_Of_Fools.Service
         public AccountDAO()
         {
             var client = new MongoClient("mongodb+srv://Ace:squirty115@cluster0.og5dfyn.mongodb.net/?retryWrites=true&w=majority");
-            var database = client.GetDatabase("insta-gramp-2");
+            var database = client.GetDatabase("league-of-fools");
             _accounts = database.GetCollection<AccountModel>("users");
         }
 
