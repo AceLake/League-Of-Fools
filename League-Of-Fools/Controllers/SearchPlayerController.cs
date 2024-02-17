@@ -21,6 +21,7 @@ namespace League_Of_Fools.Controllers
         public async Task<IActionResult> ProssesSearch(SummonerModel temp_summoner)
         {
             SummonerModel summoner = await _summonerService.GetSummonerByNameAndTagLine(temp_summoner);
+            // if the summoner was not found it will be null
             if(summoner == null)
             {
                 return View("SummonerNotFound");
