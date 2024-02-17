@@ -58,15 +58,26 @@ namespace League_Of_Fools.Controllers
 
             return View("Index");
         }
+
         [LoggedInAuthorization]
         public IActionResult AddPlayer(string gameName, string tagLine, string regionalRoutingValue, string platformRoutingValue)
         {
             AccountModel user =_accountService.getUserByID((string)HttpContext.Session.GetString("username"));
             SummonerModel temp_summoner = new SummonerModel(gameName, tagLine, regionalRoutingValue, platformRoutingValue);
 
-            _accountService.addUserToList(temp_summoner, user);
+            _accountService.AddUserToList(temp_summoner, user);
             return Redirect("AccountHome");
         }
+        [LoggedInAuthorization]
+        public IActionResult RemovePlayer(string gameName, string tagLine, string regionalRoutingValue, string platformRoutingValue)
+        {
+            AccountModel user = _accountService.getUserByID((string)HttpContext.Session.GetString("username"));
+            SummonerModel temp_summoner = new SummonerModel(gameName, tagLine, regionalRoutingValue, platformRoutingValue);
+
+            _accountService.RemoveUserFromList(temp_summoner, user);
+            return Redirect("AccountHome");
+        }
+
         public async Task<IActionResult> AccountSearch(string gameName, string tagLine, string regionalRoutingValue, string platformRoutingValue)
         {
             SummonerModel temp_summoner = new SummonerModel(gameName, tagLine, regionalRoutingValue, platformRoutingValue);

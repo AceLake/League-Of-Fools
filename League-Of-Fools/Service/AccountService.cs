@@ -15,9 +15,18 @@ namespace League_Of_Fools.Service
             return true;
         }
 
-        public void addUserToList(SummonerModel userToAdd, AccountModel account)
+        public void AddUserToList(SummonerModel userToAdd, AccountModel account)
         {
-            account.FollowedUsers.Add(userToAdd);
+            SummonerModel copy = account.FollowedUsers.Find(a => a.GameName == userToAdd.GameName);
+            if (copy == null)
+            {
+                account.FollowedUsers.Add(userToAdd);
+                _accountDAO.Update(account.ID, account);
+            }
+        }
+        public void RemoveUserFromList(SummonerModel userToRemove, AccountModel account)
+        {
+            account.FollowedUsers.RemoveAll(u => u.GameName == userToRemove.GameName);
             _accountDAO.Update(account.ID, account);
         }
 

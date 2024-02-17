@@ -22,13 +22,24 @@
         <dd class="col-sm-10">
         @foreach (var followed in Model.FollowedUsers)
         {
-                <form asp-controller="Login" asp-action="AccountSearch">
-                    <input name="gameName" value=@followed.GameName hidden/>
-                    <input name="tagLine" value=@followed.TagLine hidden />
-                    <input name="platformRoutingValue" value=@followed.PlatformRoutingValue hidden />
-                    <input name="regionalRoutingValue" value=@followed.RegionalRoutingValue hidden />
-                    <button type="submit" class="btn btn-primary">@followed.GameName</button>
-                </form>
+            <div style="display: flex;">
+                    <form asp-controller="Login" asp-action="AccountSearch">
+                        <input name="gameName" value=@followed.GameName hidden />
+                        <input name="tagLine" value=@followed.TagLine hidden />
+                        <input name="platformRoutingValue" value=@followed.PlatformRoutingValue hidden />
+                        <input name="regionalRoutingValue" value=@followed.RegionalRoutingValue hidden />
+                        <button type="submit" class="btn btn-primary">@followed.GameName</button>
+                    </form>
+                    <form asp-controller="Login" asp-action="RemovePlayer">
+                        <input name="gameName" value=@followed.GameName hidden />
+                        <input name="tagLine" value=@followed.TagLine hidden />
+                        <input name="platformRoutingValue" value=@followed.PlatformRoutingValue hidden />
+                        <input name="regionalRoutingValue" value=@followed.RegionalRoutingValue hidden />
+                        <button type="submit" class="btn btn-primary" style="margin-left: 10px; background-color:red;">Remove</button>
+                    </form>
+            </div>
+                
+
             <br />
         }
         </dd>

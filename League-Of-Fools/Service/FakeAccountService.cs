@@ -32,6 +32,11 @@ namespace League_Of_Fools.Service
             account.FollowedUsers.Add(userToAdd);
         }
 
+        public void AddUserToList(SummonerModel userToAdd, AccountModel account)
+        {
+            throw new NotImplementedException();
+        }
+
         public AccountModel getUserByID(string userID)
         {
             AccountModel user = _accounts.FirstOrDefault(a => a.ID == userID);
@@ -41,6 +46,11 @@ namespace League_Of_Fools.Service
         public AccountModel LoginAccount(string username, string password)
         {
             return _accounts.FirstOrDefault(a => a.Username == username && a.Password == password);
+        }
+
+        public void RemoveUserFromList(SummonerModel userToAdd, AccountModel account)
+        {
+            throw new NotImplementedException();
         }
     }
 }
