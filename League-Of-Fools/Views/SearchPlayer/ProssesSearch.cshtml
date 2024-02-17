@@ -7,6 +7,14 @@
         <div>
             <h1 class="champ-name" style="padding-left:15px">@Model.Name</h1>
             <h2 class="champ-title">Summoner Level: @Model.SummonerLevel</h2>
+            
+            <form asp-controller="Login" asp-action="AddPlayer">
+                <input name="gameName" value=@Model.GameName hidden />
+                <input name="tagLine" value=@Model.TagLine hidden />
+                <input name="platformRoutingValue" value=@Model.PlatformRoutingValue hidden />
+                <input name="regionalRoutingValue" value=@Model.RegionalRoutingValue hidden />
+                <button type="submit" class="btn btn-primary" style="margin-left: 15px">Follow @Model.GameName</button>
+            </form>
         </div>
     </div>
     <br />

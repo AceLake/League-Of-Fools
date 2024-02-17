@@ -25,6 +25,10 @@ namespace League_Of_Fools.Controllers
             {
                 return View("SummonerNotFound");
             }
+            summoner.GameName = temp_summoner.GameName;
+            summoner.TagLine = temp_summoner.TagLine;
+            summoner.RegionalRoutingValue = temp_summoner.RegionalRoutingValue;
+            summoner.PlatformRoutingValue = temp_summoner.PlatformRoutingValue;
             return View(summoner);
         }
     }

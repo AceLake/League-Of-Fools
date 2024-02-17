@@ -27,9 +27,9 @@ namespace League_Of_Fools.Service
             return true;
         }
 
-        public void addUserToList(UserModel userToAdd, AccountModel account)
+        public void addUserToList(SummonerModel userToAdd, AccountModel account)
         {
-            //_accounts.FirstOrDefault(a => a.ID == account.ID).FollowedUsers.Add(userToAdd.Id);
+            account.FollowedUsers.Add(userToAdd);
         }
 
         public AccountModel getUserByID(int userID)

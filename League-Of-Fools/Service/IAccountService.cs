@@ -13,7 +13,7 @@ namespace League_Of_Fools.Service
         /// <returns></returns>
         public AccountModel LoginAccount(string username, string password);
         public bool AddAccount(AccountModel newAccount);
-        public void addUserToList(UserModel userToAdd, AccountModel account);
+        public void addUserToList(SummonerModel userToAdd, AccountModel account);
         /// <summary>
         /// This can retun null
         /// </summary>

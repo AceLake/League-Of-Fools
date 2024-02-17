@@ -8,9 +8,11 @@ namespace League_Of_Fools.Controllers
     public class LoginController : Controller
     {
         private ISummonerService _summonerService;
-        public LoginController(ISummonerService summonerService)
+        private IAccountService _accountService;
+        public LoginController(ISummonerService summonerService, IAccountService accountService)
         {
             _summonerService = summonerService;
+            _accountService = accountService;   
         }
         public IActionResult Index()
         {
@@ -19,9 +21,8 @@ namespace League_Of_Fools.Controllers
 
         public IActionResult ProcessLogin(string username, string password)
         {
-            IAccountService accounts = new FakeAccountService();
 
-            AccountModel user = accounts.LoginAccount(username, password);
+            AccountModel user = _accountService.LoginAccount(username, password);
 
             if (user == null)
             {
@@ -38,9 +39,8 @@ namespace League_Of_Fools.Controllers
         [CustomAuthorization]
         public IActionResult AccountHome()
         {
-            IAccountService accounts = new FakeAccountService();
             //get the user by the cookie
-            AccountModel user = accounts.getUserByID((int)HttpContext.Session.GetInt32("username"));
+            AccountModel user = _accountService.getUserByID((int)HttpContext.Session.GetInt32("username"));
             return View(user);
         }
         public IActionResult ProcessRegister()
@@ -50,19 +50,31 @@ namespace League_Of_Fools.Controllers
 
         public IActionResult RegisterResults(string username, string password)
         {
-            IAccountService accounts = new FakeAccountService();
 
-            accounts.AddAccount(new AccountModel(username, password));
+            _accountService.AddAccount(new AccountModel(username, password));
 
-            Console.WriteLine(accounts.LoginAccount(username, password).ToString());
+            Console.WriteLine(_accountService.LoginAccount(username, password).ToString());
 
             return View("Index");
+        }
+        [CustomAuthorization]
+        public IActionResult AddPlayer(string gameName, string tagLine, string regionalRoutingValue, string platformRoutingValue)
+        {
+            AccountModel user =_accountService.getUserByID((int)HttpContext.Session.GetInt32("username"));
+            SummonerModel temp_summoner = new SummonerModel(gameName, tagLine, regionalRoutingValue, platformRoutingValue);
+
+            _accountService.addUserToList(temp_summoner, user);
+            return Redirect("AccountHome");
         }
         public async Task<IActionResult> AccountSearch(string gameName, string tagLine, string regionalRoutingValue, string platformRoutingValue)
         {
             SummonerModel temp_summoner = new SummonerModel(gameName, tagLine, regionalRoutingValue, platformRoutingValue);
 
             SummonerModel summoner = await _summonerService.GetSummonerByNameAndTagLine(temp_summoner);
+            if (summoner == null)
+            {
+                return View("SummonerNotFound");
+            }
             return View("ShowUser", summoner);
         }
     }
