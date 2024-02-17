@@ -7,6 +7,11 @@ namespace League_Of_Fools.Controllers
 {
     public class LoginController : Controller
     {
+        private ISummonerService _summonerService;
+        public LoginController(ISummonerService summonerService)
+        {
+            _summonerService = summonerService;
+        }
         public IActionResult Index()
         {
             return View();
@@ -52,6 +57,13 @@ namespace League_Of_Fools.Controllers
             Console.WriteLine(accounts.LoginAccount(username, password).ToString());
 
             return View("Index");
+        }
+        public async Task<IActionResult> AccountSearch(string gameName, string tagLine, string regionalRoutingValue, string platformRoutingValue)
+        {
+            SummonerModel temp_summoner = new SummonerModel(gameName, tagLine, regionalRoutingValue, platformRoutingValue);
+
+            SummonerModel summoner = await _summonerService.GetSummonerByNameAndTagLine(temp_summoner);
+            return View("ShowUser", summoner);
         }
     }
 }

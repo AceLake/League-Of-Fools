@@ -1,0 +1,49 @@
+﻿@model League_Of_Fools.Models.SummonerModel
+
+<div>
+    @*https://ddragon.leagueoflegends.com/cdn/14.2.1/img/profileicon/5211.png*@
+    <div class="champ-head" style="display:flex">
+        <img src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/profileicon/@(Model.ProfileIconId).png" class="player-icon" />
+        <div>
+            <h1 class="champ-name" style="padding-left:15px">@Model.Name</h1>
+            <h2 class="champ-title">Summoner Level: @Model.SummonerLevel</h2>
+            <a class="btn btn-primary" asp-controller="Login" asp-action="AccountHome" style="margin-left: 15px">Back</a>
+        </div>
+    </div>
+    <br />
+    <br />
+
+    <br />
+
+    <div class="top-champs">
+        <h2>Top Played Champs</h2>
+        <div class="container">
+            @{
+                var championMasteryEntries = await Model.CMEs;
+            }
+            @foreach (var champ in await Model.Champions)
+            {
+                var championMasteryEntry = championMasteryEntries.FirstOrDefault(cme => cme.ChampionId == champ.Key);
+
+                <div class='card' style='width: 18rem;'>
+                    <img src=@($"https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{champ.Id}_0.jpg") class='card-img-top' alt='@champ.Name' />
+                    <div class='card-body'>
+                        <h5 class='card-title'>@champ.Name</h5>
+                        @if (championMasteryEntry != null)
+                        {
+                            <h5 class='card-title'>Mastery Level: @championMasteryEntry.ChampionLevel</h5>
+                            <h5 class='card-title'>Mastery Score: @championMasteryEntry.ChampionPoints</h5>
+                        }
+                        else
+                        {
+                            <h5 class='card-title'>Mastery Level: 0</h5>
+                            <h5 class='card-title'>Mastery Score: 0</h5>
+                        }
+                        <p class='card-text'>@champ.Blurb</p>
+                        <a class="btn btn-primary" asp-route-Key="@champ.Key" asp-controller="Champions" asp-action="Details">@($"More on {champ.Name}")</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

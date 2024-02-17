@@ -21,9 +21,15 @@
         </dt>
         <dd class="col-sm-10">
         @foreach (var followed in Model.FollowedUsers)
-        {   
-               @followed 
-               <br />
+        {
+                <form asp-controller="Login" asp-action="AccountSearch">
+                    <input name="gameName" value=@followed.GameName hidden/>
+                    <input name="tagLine" value=@followed.TagLine hidden />
+                    <input name="platformRoutingValue" value=@followed.PlatformRoutingValue hidden />
+                    <input name="regionalRoutingValue" value=@followed.RegionalRoutingValue hidden />
+                    <button type="submit" class="btn btn-primary">@followed.GameName</button>
+                </form>
+            <br />
         }
         </dd>
     </dl>

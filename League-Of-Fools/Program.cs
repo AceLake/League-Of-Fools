@@ -20,6 +20,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IChampionService, ChampionService>();
 builder.Services.AddSingleton<ISummonerService, SummonerService>();
+
 builder.Services.AddHttpClient("GetSummonerByNameAndTagLine", client =>
 {
     // Configure your HttpClient here if needed

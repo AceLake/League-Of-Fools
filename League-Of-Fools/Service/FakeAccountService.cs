@@ -8,17 +8,17 @@ namespace League_Of_Fools.Service
         public FakeAccountService() 
         {
             _accounts = new List<AccountModel>();
-            _accounts.Add(new AccountModel(0, "josh", "peck", new List<string>
+            _accounts.Add(new AccountModel(0, "josh", "peck", new List<SummonerModel>
             {
-                "1", "2", "3"
+                new SummonerModel("Oneshot369", "NA1","AMERICAS", "NA1")
             }));
-            _accounts.Add(new AccountModel(1, "zach", "lake", new List<string>
+            _accounts.Add(new AccountModel(1, "zach", "lake", new List<SummonerModel>
             {
-                "1", "2", "3"
+                new SummonerModel("Oneshot369", "NA1","AMERICAS", "NA1")
             }));
-            _accounts.Add(new AccountModel(2, "ace", "peck", new List<string>
+            _accounts.Add(new AccountModel(2, "ace", "peck", new List<SummonerModel>
             {
-                "1" , "2" , "3"
+                new SummonerModel("Oneshot369", "NA1","AMERICAS", "NA1")
             }));
         }
         public bool AddAccount(AccountModel newAccount)
@@ -29,7 +29,7 @@ namespace League_Of_Fools.Service
 
         public void addUserToList(UserModel userToAdd, AccountModel account)
         {
-            _accounts.FirstOrDefault(a => a.ID == account.ID).FollowedUsers.Add(userToAdd.Id);
+            //_accounts.FirstOrDefault(a => a.ID == account.ID).FollowedUsers.Add(userToAdd.Id);
         }
 
         public AccountModel getUserByID(int userID)
