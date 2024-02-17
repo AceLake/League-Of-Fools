@@ -2,6 +2,7 @@
 using League_Of_Fools.Models;
 using League_Of_Fools.Service;
 using RegisterAndLoginApp.Controllers;
+using Microsoft.AspNetCore.Http;
 
 namespace League_Of_Fools.Controllers
 {
@@ -32,15 +33,15 @@ namespace League_Of_Fools.Controllers
             }
             else
             {
-                HttpContext.Session.SetInt32("username", user.ID);
+                HttpContext.Session.SetString("username", user.ID);
                 return View("AccountHome", user);
             }
         }
-        [CustomAuthorization]
+        [LoggedInAuthorization]
         public IActionResult AccountHome()
         {
             //get the user by the cookie
-            AccountModel user = _accountService.getUserByID((int)HttpContext.Session.GetInt32("username"));
+            AccountModel user = _accountService.getUserByID((string)HttpContext.Session.GetString("username"));
             return View(user);
         }
         public IActionResult ProcessRegister()
@@ -57,10 +58,10 @@ namespace League_Of_Fools.Controllers
 
             return View("Index");
         }
-        [CustomAuthorization]
+        [LoggedInAuthorization]
         public IActionResult AddPlayer(string gameName, string tagLine, string regionalRoutingValue, string platformRoutingValue)
         {
-            AccountModel user =_accountService.getUserByID((int)HttpContext.Session.GetInt32("username"));
+            AccountModel user =_accountService.getUserByID((string)HttpContext.Session.GetString("username"));
             SummonerModel temp_summoner = new SummonerModel(gameName, tagLine, regionalRoutingValue, platformRoutingValue);
 
             _accountService.addUserToList(temp_summoner, user);

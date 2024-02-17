@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace RegisterAndLoginApp.Controllers
 {
-    internal class CustomAuthorizationAttribute : Attribute, IAuthorizationFilter
+    internal class LoggedInAuthorization : Attribute, IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            int? username = context.HttpContext.Session.GetInt32("username");
+            string? username = context.HttpContext.Session.GetString("username");
             if (username == null)
             {
                 context.Result = new RedirectResult("/Login");

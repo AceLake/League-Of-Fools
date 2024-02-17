@@ -19,6 +19,6 @@ namespace League_Of_Fools.Service
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
-        public AccountModel getUserByID(int userID);
+        public AccountModel getUserByID(string userID);
     }
 }
