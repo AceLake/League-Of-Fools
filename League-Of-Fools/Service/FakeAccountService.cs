@@ -21,7 +21,7 @@ namespace League_Of_Fools.Service
                 new SummonerModel("Oneshot369", "NA1","AMERICAS", "NA1")
             }));
         }
-        public bool AddAccount(AccountModel newAccount)
+        public bool AddAccountAsync(AccountModel newAccount)
         {
             _accounts.Add(newAccount);
             return true;

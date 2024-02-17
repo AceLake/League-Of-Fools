@@ -52,9 +52,9 @@ namespace League_Of_Fools.Controllers
         public IActionResult RegisterResults(string username, string password)
         {
 
-            _accountService.AddAccount(new AccountModel(username, password));
+            _accountService.AddAccountAsync(new AccountModel(username, password));
 
-            Console.WriteLine(_accountService.LoginAccount(username, password).ToString());
+            _accountService.LoginAccount(username, password);
 
             return View("Index");
         }

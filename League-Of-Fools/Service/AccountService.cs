@@ -9,24 +9,29 @@ namespace League_Of_Fools.Service
         {
             _accountDAO = accountDAO;
         }
-        public bool AddAccount(AccountModel newAccount)
+        public bool AddAccountAsync(AccountModel newAccount)
         {
-            return false;
+            _accountDAO.Create(newAccount);
+            return true;
         }
 
         public void addUserToList(SummonerModel userToAdd, AccountModel account)
         {
-            
+            account.FollowedUsers.Add(userToAdd);
+            _accountDAO.Update(account.ID, account);
         }
 
         public AccountModel getUserByID(string userID)
         {
-            return null;
+            AccountModel user =_accountDAO.GetById(userID);
+            return user;
         }
 
         public AccountModel LoginAccount(string username, string password)
         {
-            return null;
+            AccountModel account = new AccountModel(username, password);
+            account = _accountDAO.GetByNameAndPassword(account);
+            return account;
         }
     }
 }

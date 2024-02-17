@@ -1,6 +1,8 @@
 ﻿using MongoDB.Driver;
 using League_Of_Fools.Models;
 using System.Data.SqlClient;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 
 namespace League_Of_Fools.Service
 {
@@ -29,11 +31,21 @@ namespace League_Of_Fools.Service
             return _accounts.Find(filter).FirstOrDefault();
         }
 
-        public bool GetByNameAndPassword(AccountModel user)
+        public AccountModel GetByNameAndPassword(AccountModel user)
         {
+            var filterBuilder = Builders<AccountModel>.Filter;
             var filter = Builders<AccountModel>.Filter.Eq(u => u.Username, user.Username) &
                          Builders<AccountModel>.Filter.Eq(u => u.Password, user.Password);
-            return _accounts.Find(filter).Any();
+            AccountModel accountToReturn = null;
+            try
+            {
+                accountToReturn=_accounts.Find(filter).First();
+            }
+            catch (Exception ex)
+            {
+                //inccorect login
+            }
+            return accountToReturn;
         }
 
         public List<AccountModel> GetAll()
