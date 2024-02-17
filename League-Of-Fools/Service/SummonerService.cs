@@ -10,7 +10,7 @@ namespace League_Of_Fools.Service
     public class SummonerService : ISummonerService
     {
         //private static readonly HttpClient client;
-        private static string apiKey = "RGAPI-620ed0c1-1ff7-48c8-9ed5-9c0763db21fe";
+        private static string apiKey = "RGAPI-85fcca42-9cea-445b-86d8-6b91c84406be";
         private readonly IHttpClientFactory _clientFactory;
         private readonly IChampionService _championService;
 
