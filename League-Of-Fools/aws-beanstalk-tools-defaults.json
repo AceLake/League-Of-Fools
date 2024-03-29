@@ -1,0 +1,13 @@
+
+{
+    "region" : "us-east-2",
+    "configuration" : "Release",
+    "framework"     : "net6.0",
+    "self-contained" : false,
+    "application"    : "League",
+    "environment"    : "League-env",
+    "enable-xray"    : false,
+    "enhanced-health-type" : "enhanced",
+    "additional-options"   : "",
+    "proxy-server"         : "nginx"
+}
