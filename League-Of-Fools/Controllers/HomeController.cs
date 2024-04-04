@@ -1,5 +1,6 @@
 ﻿using League_Of_Fools.Models;
 using League_Of_Fools.Service;
+using League_Of_Fools.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -16,11 +17,13 @@ namespace League_Of_Fools.Controllers
 
         public IActionResult Index()
         {
+            MyLogger.GetInstance().Info(this.GetType().Name, "In Index");
             return View();
         }
 
         public IActionResult Privacy()
         {
+            MyLogger.GetInstance().Info(this.GetType().Name, "In Privacy");
             return View();
         }
 

@@ -1,9 +1,25 @@
 using League_Of_Fools.Service;
+using NLog;
+using NLog.Web;
+using LogLevel = NLog.LogLevel;
+
+//Setting up logging
+var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+
+logger.Info("init logger");
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 //this is where we add cookies
 builder.Services.AddDistributedMemoryCache();
+
+builder.Logging.ClearProviders();
+
+//using NLog
+builder.Host.UseNLog();
+
 
 builder.Services.AddSession(options =>
 {
