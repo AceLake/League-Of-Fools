@@ -1,5 +1,16 @@
+:root {
+    --primary: #0B3769;
+    --secondary: #4DF6E1;
+    --tertiary: #FAFCFF;
+    --background: #020C17;
+    --error: #FF5555;
+    --warning: #FFF61A;
+    --success: #0DFF34;
+}
+
 html {
   font-size: 14px;
+
 }
 
 @media (min-width: 768px) {
@@ -15,7 +26,9 @@ html {
 
 body {
     margin-bottom: 60px;
-    /*background-color: #032C30;*/
+    background-color: var(--background);
+    padding-top: 16px;
+    padding-bottom: 16px;
 }
 
 .container {
@@ -38,12 +51,123 @@ body {
     color: rgb(83, 83, 83);
 }
 
-.navbar {
-    background-color: #0D2026;
-}
-
 .player-icon {
     width: 18%;
     height: 18%;
     border-radius: 8%;
 }
+
+.primary-btn {
+    background-color: var(--primary);
+    border-radius: 8px;
+    border: none;
+    padding: 8px 16px 8px 16px;
+    color: var(--secondary);
+    font-family: 'Segoe UI';
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+    .primary-btn > a {
+        color: var(--secondary);
+        font-family: 'Segoe UI';
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        margin: 0px;
+        padding: 0px;
+    }
+
+a {
+    text-decoration: none;
+}
+
+h1 {
+    font-family: 'Segoe UI';
+    font-weight: 800;
+    font-size: 40px;
+    color: var(--tertiary);
+    margin: 0px;
+    padding: 0px;
+}
+
+h2 {
+    font-family: 'Segoe UI';
+    font-weight: 600;
+    font-size: 24px;
+    color: var(--tertiary);
+    margin: 0px;
+    padding: 0px;
+}
+
+h3 {
+    font-family: 'Segoe UI';
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--tertiary);
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.secondary-text {
+    color: var(--secondary);
+}
+
+p {
+    font-family: 'Segoe UI';
+    font-weight: normal;
+    font-size: 16px;
+    color: var(--tertiary);
+}
+
+card {
+    background-color: rgba(11, 55, 105, 0.2);
+    border-radius: 24px;
+}
+
+.navbar {
+    background-color: var(--background);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 96px;
+    padding-left: 64px;
+    padding-right: 64px;
+}
+
+.nav-items {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
+.hero {
+    width: 100%;
+    height: calc(100vh - 112px);
+    background: url("/images/Hero_Background.jpg") center/cover no-repeat;
+    padding: 64px;
+    display: flex;
+    align-items: center;
+}
+
+.hero-items {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    align-items:flex-end;
+}
+
+.control-label {
+    color: var(--tertiary);
+    margin-bottom: 4px;
+}
+
