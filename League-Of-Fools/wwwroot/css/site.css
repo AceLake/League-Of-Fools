@@ -67,6 +67,10 @@ body {
     color: rgb(83, 83, 83);
 }
 
+.champ-head {
+    margin-right: 32px;
+}
+
 .player-icon {
     width: 18%;
     height: 18%;
