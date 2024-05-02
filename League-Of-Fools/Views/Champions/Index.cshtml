@@ -3,16 +3,25 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="tertiary-hero">
+    <div class="hero-items">
+        <h1>Search Champion</h1>
+        <div></div>
+        <div></div>
+        <!--TODO: Insert Form here for searching for champs-->
+    </div>
+</div>
 <div class="container">
     @foreach (var champ in Model)
     {
-        <div class='card' style='width: 18rem;'>
-            <img src=@($"https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{champ.Id}_0.jpg") class='card-img-top' alt='@champ.Name' />
-            <div class='card-body'>
-                <h5 class='card-title'>@champ.Name</h5>
-                <p class='card-text'>@champ.Blurb</p>
-                <a class="btn btn-primary" asp-route-Key="@champ.Key" asp-controller="Champions" asp-action="Details">@($"More on {champ.Name}")</a>
+        <a asp-route-Key="@champ.Key" asp-controller="Champions" asp-action="Details">
+            <div class='card' style='width: 18rem;'>
+                <img src=@($"https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{champ.Id}_0.jpg") alt='@champ.Name' />
+                <div class='card-body'>
+                    <h3>@champ.Name</h3>
+                    <p>></p>
+                </div>
             </div>
-        </div>
+        </a>
     }
 </div>

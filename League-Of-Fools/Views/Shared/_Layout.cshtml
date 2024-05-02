@@ -7,23 +7,33 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/League_Of_Fools.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="~/js/site.js"></script>
 </head>
 <body>
     <header>
         <nav class="navbar">
-                <a asp-area="" asp-controller="Home" asp-action="Index"><img src="/logo.svg" width="58"/></a>
+            <a asp-area="" asp-controller="Home" asp-action="Index"><img src="/logo.svg" width="58" /></a>
+            <button class="hamburger" onclick="toggleMenu()">☰</button>
+            <div class="menu">
                 <ul class="nav-items">
-                        <li>
-                    <button class="primary-btn"><a asp-area="" asp-controller="Searchplayer" asp-action="Index">Search Player</a></button>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="Champions" asp-action="Index"><h3>Champion List</h3></a>
-                        </li>
-                        <li>
-                            <a class="icon" asp-area="" asp-controller="Login" asp-action="AccountHome"><img src="icons/account.svg" /></a>
-                        </li>
+                    <li>
+                        <button class="primary-btn">
+                            <a asp-area="" asp-controller="Searchplayer" asp-action="Index">Search Player</a>
+                        </button>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Champions" asp-action="Index"><h3>Champion List</h3></a>
+                    </li>
+                    <li>
+                        <a class="icon" asp-area="" asp-controller="Login" asp-action="AccountHome">
+                            <img src="icons/account.svg" />
+                        </a>
+                    </li>
                 </ul>
+            </div>
         </nav>
+
+
     </header>
     <div>
         <main role="main">

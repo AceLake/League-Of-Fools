@@ -6,22 +6,22 @@
     --error: #FF5555;
     --warning: #FFF61A;
     --success: #0DFF34;
+    --card-background: rgb(11, 55, 105, .2);
 }
 
 html {
-  font-size: 14px;
-
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
@@ -34,11 +34,27 @@ body {
 .container {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
 }
 
-.card{
-    padding: 5px;
-    margin: 10px;
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--card-background);
+    border-radius: 24px;
+    gap: 16px;
+    margin: 32px;
+}
+
+    .card > img {
+        height: 200px;
+        width: 100%;
+        border-radius: 24px 24px 0px 0px;
+    }
+
+.card-body {
+    display: flex;
+    justify-content: space-between;
 }
 
 .carousel-caption {
@@ -140,14 +156,82 @@ card {
 
 .nav-items {
     display: flex;
+    list-style: none;
+}
+
+.hamburger {
+    display: none;
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .menu {
+        display: none;
+        width: 100%;
+        background-color: var(--background);
+    }
+
+        .menu ul {
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+        }
+
+            .menu ul li {
+                padding: 16px;
+                width: 100%;
+                text-align: center;
+            }
+
+                .menu ul li:hover {
+                    background-color: var(--card-background);
+                }
+
+    .nav-items {
+        display: none;
+    }
+}
+
+.nav-items {
+    display: flex;
     gap: 32px;
     align-items: center;
 }
+
+    .nav-items > li {
+        list-style-type: none;
+    }
 
 .hero {
     width: 100%;
     height: calc(100vh - 112px);
     background: url("/images/Hero_Background.jpg") center/cover no-repeat;
+    padding: 64px;
+    display: flex;
+    align-items: center;
+}
+
+.secondary-hero {
+    width: 100%;
+    height: calc(50vh - 112px);
+    background: url("/images/Hero_Background.jpg") center/cover no-repeat;
+    padding: 64px;
+    display: flex;
+    align-items: center;
+}
+
+.tertiary-hero {
+    width: 100%;
+    height: calc(50vh - 112px);
+    background: url("/images/Champions_Background.jpg") center/cover no-repeat;
     padding: 64px;
     display: flex;
     align-items: center;
@@ -163,11 +247,10 @@ card {
     display: flex;
     flex-direction: row;
     gap: 32px;
-    align-items:flex-end;
+    align-items: flex-end;
 }
 
 .control-label {
     color: var(--tertiary);
     margin-bottom: 4px;
 }
-

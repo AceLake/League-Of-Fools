@@ -1,4 +1,12 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function toggleMenu() {
+    var menu = document.querySelector('.menu');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
 
-// Write your JavaScript code.
+// Reset the menu display on window resize
+window.addEventListener('resize', function () {
+    var menu = document.querySelector('.menu');
+    if (window.innerWidth > 768) {
+        menu.style.display = ''; // Clear inline style
+    }
+});
