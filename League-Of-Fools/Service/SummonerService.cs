@@ -11,7 +11,7 @@ namespace League_Of_Fools.Service
     {
         //coment
         //private static readonly HttpClient client;
-        private static string apiKey = "RGAPI-81e5579f-a543-4799-bff6-6d0fa727f303";
+        private static string apiKey = "RGAPI-c8b658bd-4864-411c-9482-36510467faed";
         private readonly IHttpClientFactory _clientFactory;
         private readonly IChampionService _championService;
 
